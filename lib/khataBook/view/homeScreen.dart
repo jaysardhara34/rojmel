@@ -108,9 +108,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(color: Color(0xff000000)),
                       keyboardType: TextInputType.numberWithOptions(),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.phone_android,
-                          color: Color(0xff919191),
+                        prefixIcon: SizedBox(width: 53,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.phone_android,
+                                  color: Color(0xff919191),
+                                ),
+                                Text('+91',style: TextStyle(color: Color(0xff919191),),),
+                              ],
+                            ),
+                          ),
                         ),
                         focusColor: Color(0xff000000),
                         fillColor: Color(0xff000000),

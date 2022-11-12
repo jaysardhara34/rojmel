@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:rojmel/khataBook/controller/homeController.dart';
 import 'package:rojmel/khataBook/utils/dataBase.dart';
 import 'package:rojmel/khataBook/view/customerScreen.dart';
@@ -69,7 +70,8 @@ class _PayLaterScreenState extends State<PayLaterScreen> {
           centerTitle: true,
           title: Text('Paylater'),
         ),
-        body: WillPopScope(onWillPop: dialog,
+        body: WillPopScope(
+          onWillPop: dialog,
           child: SingleChildScrollView(
             child: Center(
               child: Container(
@@ -161,7 +163,10 @@ class _PayLaterScreenState extends State<PayLaterScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    TextField(
+                    TextField(readOnly: true,
+                      onTap: () {
+                        datepick();
+                      },
                       controller: _txtpurdate,
                       cursorColor: Color(0xff000000),
                       style: TextStyle(color: Color(0xff000000)),
@@ -226,6 +231,7 @@ class _PayLaterScreenState extends State<PayLaterScreen> {
       ),
     );
   }
+
   Future<bool> dialog() async {
     back();
     return await false;
@@ -233,6 +239,25 @@ class _PayLaterScreenState extends State<PayLaterScreen> {
 
   void back() {
     Get.off(CustomerInfo());
+  }
 
+  void datepick() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      //get today's date
+      firstDate: DateTime(2020),
+      //DateTime.now() - not to allow to choose before today.
+      lastDate: DateTime(2999),
+    );
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+
+      setState(() {
+        _txtpurdate = TextEditingController(text: "$formattedDate");
+      });
+    } else {
+      print("Date is not selected");
+    }
   }
 }

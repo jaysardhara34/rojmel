@@ -6,4 +6,5 @@ class HomeController extends GetxController
   RxList<Map> Cuslist = <Map>[].obs;
 
   DataModal? dataModal;
+
 }

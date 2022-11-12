@@ -42,6 +42,7 @@ dependencies:
   lottie: ^2.0.0
   url_launcher: any
   share_plus: any
+  intl: any
 
 dev_dependencies:
   flutter_test:

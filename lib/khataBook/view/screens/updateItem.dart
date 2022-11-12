@@ -6,14 +6,14 @@ import 'package:rojmel/khataBook/controller/prodController.dart';
 import 'package:rojmel/khataBook/utils/dataBase.dart';
 import 'package:rojmel/khataBook/view/customerScreen.dart';
 
-class PayNowScreen extends StatefulWidget {
-  const PayNowScreen({Key? key}) : super(key: key);
+class UpdateItem extends StatefulWidget {
+  const UpdateItem({Key? key}) : super(key: key);
 
   @override
-  State<PayNowScreen> createState() => _PayNowScreenState();
+  State<UpdateItem> createState() => _UpdateItemState();
 }
 
-class _PayNowScreenState extends State<PayNowScreen> {
+class _UpdateItemState extends State<UpdateItem> {
   TextEditingController _txtname = TextEditingController();
   TextEditingController _txtqa = TextEditingController();
   TextEditingController _txtprice = TextEditingController();
@@ -213,12 +213,12 @@ class _PayNowScreenState extends State<PayNowScreen> {
                           _txtprice.clear();
                           _txtqa.clear();
                           Get.off(CustomerInfo());
-                          Get.snackbar('Product Data Added Sucessfully',
-                              'You Can Pay Now',
+                          Get.snackbar('Product Data ',
+                              'Updated Sucessfully',
                               duration: Duration(seconds: 1));
                         },
                         child: Text(
-                          'Submit',
+                          'Update',
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.045,
                           ),
