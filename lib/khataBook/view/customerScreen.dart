@@ -291,7 +291,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                         0.19,
                                     color: Colors.red.shade200,
                                     child: Center(
-                                      child: Text("₹ ${_pcontroller.Prodlist[index]['price']}",
+                                      child: Text("₹ ${_pcontroller.Prodlist[index]['payment_status']== 1?0:_pcontroller.Prodlist[index]['price']}",
                                         style: TextStyle(color: Colors.red.shade900),
                                       ),
                                     ),
@@ -306,7 +306,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                         0.186,
                                     child: Center(
                                       child: Text(
-                                        "₹ ${_pcontroller.Prodlist[index]['price']}",
+                                        "₹ ${_pcontroller.Prodlist[index]['payment_status']== 0?0:_pcontroller.Prodlist[index]['price']}",
                                         style: TextStyle(color: Colors.green.shade900),
                                       ),
                                     ),
