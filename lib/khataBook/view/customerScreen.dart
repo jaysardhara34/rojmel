@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:rojmel/khataBook/controller/homeController.dart';
 import 'package:rojmel/khataBook/controller/prodController.dart';
+import 'package:rojmel/khataBook/modal/prodModal.dart';
 import 'package:rojmel/khataBook/utils/dataBase.dart';
 import 'package:rojmel/khataBook/view/addproductScreen/payLater.dart';
 import 'package:rojmel/khataBook/view/addproductScreen/payNow.dart';
+import 'package:rojmel/khataBook/view/screens/updateItem.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +20,11 @@ class CustomerInfo extends StatefulWidget {
 }
 
 class _CustomerInfoState extends State<CustomerInfo> {
+  TextEditingController _txtname = TextEditingController();
+  TextEditingController _txtqa = TextEditingController();
+  TextEditingController _txtprice = TextEditingController();
+  TextEditingController _txtpurdate = TextEditingController();
+
   Mydb _db = Mydb();
   HomeController _controller = Get.put(HomeController());
   ProdController _pcontroller = Get.put(ProdController());
@@ -96,7 +104,8 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Total Done',
@@ -130,7 +139,8 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Total Pending',
@@ -166,7 +176,8 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             Padding(
                               padding: EdgeInsets.only(top: 5),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
                                     onPressed: () async {
@@ -190,7 +201,6 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                   IconButton(
                                     onPressed: () async => await launch(
                                         "https://wa.me/+91${_controller.dataModal!.mobile}?text=Hello Mr .${_controller.dataModal!.name} from ${_controller.dataModal!.address} Your Date To Pay Your Bill is Here Please Kindly Pay As Soon As Possible"),
-
                                     icon: Icon(
                                       Icons.whatsapp,
                                       color: Colors.blue.shade900,
@@ -261,7 +271,204 @@ class _CustomerInfoState extends State<CustomerInfo> {
                         child: ListView.builder(
                           itemCount: _pcontroller.Prodlist.length,
                           itemBuilder: (context, index) {
-                            return InkWell(onTap: (){},
+                            return InkWell(
+                              onTap: () {
+                                _txtprice = TextEditingController(text: '${_pcontroller.Prodlist[index]['price']}');
+                                _txtpurdate = TextEditingController(text: '${_pcontroller.Prodlist[index]['purchasedate']}');
+                                _txtname = TextEditingController(text: '${_pcontroller.Prodlist[index]['productname']}');
+                                _txtqa = TextEditingController(text: '${_pcontroller.Prodlist[index]['quantity']}');
+                                Get.defaultDialog(
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          _db.Prodeletedata(_pcontroller
+                                              .Prodlist.value[index]['id']
+                                              .toString());
+                                          getdata();
+                                          Get.back();
+
+                                        },
+                                        child: Text(
+                                          'Delete',
+                                          style: TextStyle(
+                                              color: Color(0xff000000),
+                                              fontSize: 15),
+                                        )),
+                                    SizedBox(
+                                      width: 1,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          _db.Proupdatedata(_pcontroller.Prodlist[index]['id'].toString(), _pcontroller.Prodlist[index]['productname'], _pcontroller.Prodlist[index]['quantity'], _pcontroller.Prodlist[index]['price'], _pcontroller.Prodlist[index]['purchasedate'], _pcontroller.Prodlist[index]['client_id'], _pcontroller.Prodlist[index]['payment_status']);
+
+                                          getdata();
+                                          Get.back();
+                                          Get.snackbar('Customer Data',
+                                              'Updated Sucessfully',
+                                              duration: Duration(seconds: 1));
+                                        },
+                                        child: Text('Update',
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 16)))
+                                  ],
+                                  title: 'Update Product Details',
+                                  content: Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            top: 30, left: 10, right: 10),
+                                        child: Column(
+                                          children: [
+                                            TextField(
+                                              controller: _txtname,
+                                              cursorColor: Color(0xff000000),
+                                              style: TextStyle(
+                                                  color: Color(0xff000000)),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons.propane_tank_outlined,
+                                                  color: Color(0xff919191),
+                                                ),
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff919191)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                hintText: 'Enter Product Name',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            TextField(
+                                              controller: _txtqa,
+                                              cursorColor: Color(0xff000000),
+                                              style: TextStyle(
+                                                  color: Color(0xff000000)),
+                                              keyboardType: TextInputType
+                                                  .numberWithOptions(),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons
+                                                      .production_quantity_limits,
+                                                  color: Color(0xff919191),
+                                                ),
+                                                focusColor: Color(0xff000000),
+                                                fillColor: Color(0xff000000),
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff919191)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                hintText: 'Enter Quantity',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            TextField(
+                                              keyboardType: TextInputType
+                                                  .numberWithOptions(),
+                                              controller: _txtprice,
+                                              cursorColor: Color(0xff000000),
+                                              style: TextStyle(
+                                                  color: Color(0xff000000)),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons.currency_rupee,
+                                                  color: Color(0xff919191),
+                                                ),
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff919191)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                hintText: 'Enter Price',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                        
+                                            TextField(
+                                              readOnly: true,
+                                              onTap: () {
+                                                datepick();
+                                              },
+                                              controller: _txtpurdate,
+                                              cursorColor: Color(0xff000000),
+                                              style: TextStyle(
+                                                  color: Color(0xff000000)),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons.date_range_sharp,
+                                                  color: Color(0xff919191),
+                                                ),
+                                                focusColor: Color(0xff000000),
+                                                fillColor: Color(0xff000000),
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff919191)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                hintText: 'Enter Purchase Date',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xff000000)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 50,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -269,14 +476,16 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                       color: Colors.black12,
                                       borderRadius: BorderRadius.circular(10)),
                                   height: 60,
-                                  width: MediaQuery.of(context).size.width * 0.99,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.99,
                                   child: Row(
                                     children: [
                                       Container(
                                         padding: EdgeInsets.only(left: 7),
                                         height: 60,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.55,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.55,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -308,10 +517,11 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                             Text(
                                               "${_pcontroller.Prodlist[index]['productname']}",
                                               style: TextStyle(
-                                                  fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.045),
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.045),
                                             ),
                                           ],
                                         ),
@@ -321,13 +531,15 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                       ),
                                       Container(
                                         height: 60,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.19,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.19,
                                         color: Colors.red.shade200,
                                         child: Center(
                                           child: Text(
                                             "${_pcontroller.Prodlist[index]['payment_status'] == 1 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
-                                            style: TextStyle(
+                                            style: TextStyle( fontSize: MediaQuery.of(context).size.width *
+                                                0.047,
                                                 color: Colors.red.shade900),
                                           ),
                                         ),
@@ -337,14 +549,17 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                             color: Colors.greenAccent,
                                             borderRadius: BorderRadius.only(
                                                 topRight: Radius.circular(10),
-                                                bottomRight: Radius.circular(10))),
+                                                bottomRight:
+                                                    Radius.circular(10))),
                                         height: 60,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.186,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.186,
                                         child: Center(
                                           child: Text(
                                             "${_pcontroller.Prodlist[index]['payment_status'] == 0 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
-                                            style: TextStyle(
+                                            style: TextStyle(fontSize: MediaQuery.of(context).size.width *
+                                                0.047,
                                                 color: Colors.green.shade900),
                                           ),
                                         ),
@@ -417,5 +632,25 @@ class _CustomerInfoState extends State<CustomerInfo> {
         ),
       ),
     );
+  }
+
+  void datepick() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      //get today's date
+      firstDate: DateTime(2020),
+      //DateTime.now() - not to allow to choose before today.
+      lastDate: DateTime(2999),
+    );
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+
+      setState(() {
+        _txtpurdate = TextEditingController(text: "$formattedDate");
+      });
+    } else {
+      print("Date is not selected");
+    }
   }
 }

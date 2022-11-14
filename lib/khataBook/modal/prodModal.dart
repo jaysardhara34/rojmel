@@ -1,6 +1,6 @@
 class ProdModal
 {
-  String? name,mobile,address;
 
-  ProdModal({this.name, this.mobile, this.address});
+  String? name,quantity,price,paymentstatus,date,id;
+  ProdModal({this.name, this.quantity, this.price, this.date,this.paymentstatus,this.id});
 }

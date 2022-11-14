@@ -71,96 +71,95 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Get.defaultDialog(
-              content: Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      controller: _txtname,
-                      cursorColor: Color(0xff000000),
-                      style: TextStyle(color: Color(0xff000000)),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Color(0xff919191),
+              content: Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
                         ),
-                        hintStyle: TextStyle(color: Color(0xff919191)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter Name',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller: _txtmobile,
-                      cursorColor: Color(0xff000000),
-                      style: TextStyle(color: Color(0xff000000)),
-                      keyboardType: TextInputType.numberWithOptions(),
-                      decoration: InputDecoration(
-                        prefixIcon: SizedBox(width: 53,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.phone_android,
-                                  color: Color(0xff919191),
-                                ),
-                                Text('+91',style: TextStyle(color: Color(0xff919191),),),
-                              ],
+                        TextField(
+                          controller: _txtname,
+                          cursorColor: Color(0xff000000),
+                          style: TextStyle(color: Color(0xff000000)),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Color(0xff919191),
+                            ),
+                            hintStyle: TextStyle(color: Color(0xff919191)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            hintText: 'Enter Name',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                         ),
-                        focusColor: Color(0xff000000),
-                        fillColor: Color(0xff000000),
-                        hintStyle: TextStyle(color: Color(0xff919191)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
+                        SizedBox(
+                          height: 22,
                         ),
-                        hintText: 'Enter Mobile',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
+                        TextField(
+                          controller: _txtmobile,
+                          cursorColor: Color(0xff000000),
+                          style: TextStyle(color: Color(0xff000000)),
+                          keyboardType: TextInputType.numberWithOptions(),
+                          decoration: InputDecoration(
+                            prefixIcon: SizedBox(width: 53,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Icon(
+                                  Icons.phone_android,
+                                  color: Color(0xff919191),
+                                ),
+                              ),
+                            ),
+                            focusColor: Color(0xff000000),
+                            fillColor: Color(0xff000000),
+                            hintStyle: TextStyle(color: Color(0xff919191)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            hintText: 'Enter Mobile',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 22,
+                        ),
+                        TextField(
+                          controller: _txtadd,
+                          cursorColor: Color(0xff000000),
+                          style: TextStyle(color: Color(0xff000000)),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.home,
+                              color: Color(0xff919191),
+                            ),
+                            hintStyle: TextStyle(color: Color(0xff919191)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            hintText: 'Enter Address',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff000000)),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller: _txtadd,
-                      cursorColor: Color(0xff000000),
-                      style: TextStyle(color: Color(0xff000000)),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.home,
-                          color: Color(0xff919191),
-                        ),
-                        hintStyle: TextStyle(color: Color(0xff919191)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter Address',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff000000)),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               actions: [
@@ -364,112 +363,116 @@ class _HomeScreenState extends State<HomeScreen> {
                                         text:
                                             '${_controller.Cuslist.value[index]['address']}');
                                     Get.defaultDialog(
-                                      content: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextField(
-                                              controller: _utxtname,
-                                              cursorColor: Color(0xff000000),
-                                              style: TextStyle(
-                                                  color: Color(0xff000000)),
-                                              decoration: InputDecoration(
-                                                prefixIcon: Icon(
-                                                  Icons.person,
-                                                  color: Color(0xff919191),
+                                      content: Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 10,
                                                 ),
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xff919191)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
+                                                TextField(
+                                                  controller: _utxtname,
+                                                  cursorColor: Color(0xff000000),
+                                                  style: TextStyle(
                                                       color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
+                                                  decoration: InputDecoration(
+                                                    prefixIcon: Icon(
+                                                      Icons.person,
+                                                      color: Color(0xff919191),
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                        color: Color(0xff919191)),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                    hintText: 'Enter Name',
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                  ),
                                                 ),
-                                                hintText: 'Enter Name',
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                TextField(
+                                                  controller: _utxtmobile,
+                                                  cursorColor: Color(0xff000000),
+                                                  style: TextStyle(
                                                       color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
+                                                  keyboardType: TextInputType
+                                                      .numberWithOptions(),
+                                                  decoration: InputDecoration(
+                                                    prefixIcon: Icon(
+                                                      Icons.phone_android,
+                                                      color: Color(0xff919191),
+                                                    ),
+                                                    focusColor: Color(0xff000000),
+                                                    fillColor: Color(0xff000000),
+                                                    hintStyle: TextStyle(
+                                                        color: Color(0xff919191)),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                    hintText: 'Enter Mobile',
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            TextField(
-                                              controller: _utxtmobile,
-                                              cursorColor: Color(0xff000000),
-                                              style: TextStyle(
-                                                  color: Color(0xff000000)),
-                                              keyboardType: TextInputType
-                                                  .numberWithOptions(),
-                                              decoration: InputDecoration(
-                                                prefixIcon: Icon(
-                                                  Icons.phone_android,
-                                                  color: Color(0xff919191),
+                                                SizedBox(
+                                                  height: 20,
                                                 ),
-                                                focusColor: Color(0xff000000),
-                                                fillColor: Color(0xff000000),
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xff919191)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
+                                                TextField(
+                                                  controller: _utxtadd,
+                                                  cursorColor: Color(0xff000000),
+                                                  style: TextStyle(
                                                       color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
+                                                  decoration: InputDecoration(
+                                                    prefixIcon: Icon(
+                                                      Icons.home,
+                                                      color: Color(0xff919191),
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                        color: Color(0xff919191)),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                    hintText: 'Enter Address',
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xff000000)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                    ),
+                                                  ),
                                                 ),
-                                                hintText: 'Enter Mobile',
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                              ),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            TextField(
-                                              controller: _utxtadd,
-                                              cursorColor: Color(0xff000000),
-                                              style: TextStyle(
-                                                  color: Color(0xff000000)),
-                                              decoration: InputDecoration(
-                                                prefixIcon: Icon(
-                                                  Icons.home,
-                                                  color: Color(0xff919191),
-                                                ),
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xff919191)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                hintText: 'Enter Address',
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xff000000)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                       actions: [

@@ -35,6 +35,13 @@ class _UpdateItemState extends State<UpdateItem> {
   }
 
   Widget build(BuildContext context) {
+    _txtname = TextEditingController(text: '${prodController.prodModal!.name}');
+    _txtqa =
+        TextEditingController(text: '${prodController.prodModal!.quantity}');
+    _txtpurdate =
+        TextEditingController(text: '${prodController.prodModal!.date}');
+    _txtprice =
+        TextEditingController(text: '${prodController.prodModal!.price}');
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xfffafafa),
@@ -55,7 +62,7 @@ class _UpdateItemState extends State<UpdateItem> {
           ),
           elevation: 00,
           centerTitle: true,
-          title: Text('Paynow'),
+          title: Text('Update Item'),
           actions: [
             Padding(
               padding: EdgeInsets.only(right: 10),
@@ -79,7 +86,7 @@ class _UpdateItemState extends State<UpdateItem> {
                 child: Column(
                   children: [
                     Text(
-                      'Enter Product Details',
+                      'Update Product Details',
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05,
                       ),
@@ -193,36 +200,66 @@ class _UpdateItemState extends State<UpdateItem> {
                     SizedBox(
                       height: 50,
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade900,
-                            minimumSize: Size(
-                                MediaQuery.of(context).size.width * 0.40,
-                                MediaQuery.of(context).size.height * 0.06)),
-                        onPressed: () {
-                          _pdb.ProinsertData(
-                              _txtname.text,
-                              _txtqa.text,
-                              _txtprice.text,
-                              _txtpurdate.text,
-                              int.parse(_controller.dataModal!.id!),
-                              1);
-                          getdata();
-                          _txtpurdate.clear();
-                          _txtname.clear();
-                          _txtprice.clear();
-                          _txtqa.clear();
-                          Get.off(CustomerInfo());
-                          Get.snackbar('Product Data ',
-                              'Updated Sucessfully',
-                              duration: Duration(seconds: 1));
-                        },
-                        child: Text(
-                          'Update',
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ))
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue.shade900,
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.40,
+                                    MediaQuery.of(context).size.height * 0.06)),
+                            onPressed: () {
+                              _pdb.ProinsertData(
+                                  _txtname.text,
+                                  _txtqa.text,
+                                  _txtprice.text,
+                                  _txtpurdate.text,
+                                  int.parse(_controller.dataModal!.id!),
+                                  1);
+                              getdata();
+                              _txtpurdate.clear();
+                              _txtname.clear();
+                              _txtprice.clear();
+                              _txtqa.clear();
+                              Get.off(CustomerInfo());
+                              Get.snackbar(
+                                  'Product Data ', 'Updated Sucessfully',
+                                  duration: Duration(seconds: 1));
+                            },
+                            child: Text(
+                              'Update',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            )),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue.shade900,
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.40,
+                                    MediaQuery.of(context).size.height * 0.06)),
+                            onPressed: () {
+_pdb.ProreadData("${prodController.prodModal!.id}");
+                              getdata();
+                              _txtpurdate.clear();
+                              _txtname.clear();
+                              _txtprice.clear();
+                              _txtqa.clear();
+                              Get.off(CustomerInfo());
+                              Get.snackbar(
+                                  'Product Data ', 'Deleted Sucessfully',
+                                  duration: Duration(seconds: 1));
+                            },
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            )),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -251,16 +288,14 @@ class _UpdateItemState extends State<UpdateItem> {
       //DateTime.now() - not to allow to choose before today.
       lastDate: DateTime(2999),
     );
-    if(pickedDate != null ){
+    if (pickedDate != null) {
       String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
 
       setState(() {
-
         _txtpurdate = TextEditingController(text: "$formattedDate");
       });
-    }else{
+    } else {
       print("Date is not selected");
     }
-
   }
 }
