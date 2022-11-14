@@ -79,8 +79,8 @@ class _CustomerInfoState extends State<CustomerInfo> {
               padding: EdgeInsets.only(right: 10),
               child: IconButton(
                   onPressed: () async {
-                    await launchUrl(
-                        Uri.parse("tel: +91${_controller.dataModal!.mobile}"));
+                    await launchUrl(Uri.parse(
+                        "tel: +91/*/*/*Ṇ*/*/*/${_controller.dataModal!.mobile}"));
                   },
                   icon: Icon(Icons.phone)),
             )
@@ -253,7 +253,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text('Remind'),
+                                Text('Remain'),
                                 Container(
                                   height: 15,
                                   width: 0.5,
@@ -273,10 +273,18 @@ class _CustomerInfoState extends State<CustomerInfo> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                _txtprice = TextEditingController(text: '${_pcontroller.Prodlist[index]['price']}');
-                                _txtpurdate = TextEditingController(text: '${_pcontroller.Prodlist[index]['purchasedate']}');
-                                _txtname = TextEditingController(text: '${_pcontroller.Prodlist[index]['productname']}');
-                                _txtqa = TextEditingController(text: '${_pcontroller.Prodlist[index]['quantity']}');
+                                _txtprice = TextEditingController(
+                                    text:
+                                        '${_pcontroller.Prodlist[index]['price']}');
+                                _txtpurdate = TextEditingController(
+                                    text:
+                                        '${_pcontroller.Prodlist[index]['purchasedate']}');
+                                _txtname = TextEditingController(
+                                    text:
+                                        '${_pcontroller.Prodlist[index]['productname']}');
+                                _txtqa = TextEditingController(
+                                    text:
+                                        '${_pcontroller.Prodlist[index]['quantity']}');
                                 Get.defaultDialog(
                                   actions: [
                                     TextButton(
@@ -286,7 +294,6 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                               .toString());
                                           getdata();
                                           Get.back();
-
                                         },
                                         child: Text(
                                           'Delete',
@@ -299,7 +306,19 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                     ),
                                     TextButton(
                                         onPressed: () {
-                                          _db.Proupdatedata(_pcontroller.Prodlist[index]['id'].toString(), _pcontroller.Prodlist[index]['productname'], _pcontroller.Prodlist[index]['quantity'], _pcontroller.Prodlist[index]['price'], _pcontroller.Prodlist[index]['purchasedate'], _pcontroller.Prodlist[index]['client_id'], _pcontroller.Prodlist[index]['payment_status']);
+                                          _db.Proupdatedata(
+                                              _pcontroller.Prodlist[index]['id']
+                                                  .toString(),
+                                              _txtname.text,
+                                              _txtqa.text,
+                                              _txtprice.text,
+                                              _txtpurdate.text,
+                                              _pcontroller.Prodlist[index]
+                                                  ['client_id'],
+                                              _pcontroller.utxtRadio.value ==
+                                                      "Done"
+                                                  ? 1
+                                                  : 0);
 
                                           getdata();
                                           Get.back();
@@ -423,7 +442,6 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                             SizedBox(
                                               height: 20,
                                             ),
-                                        
                                             TextField(
                                               readOnly: true,
                                               onTap: () {
@@ -457,6 +475,62 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                                   borderRadius:
                                                       BorderRadius.circular(20),
                                                 ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Align(
+                                                alignment: Alignment.centerLeft,
+                                                child:
+                                                    Text('Payment Status :')),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Obx(
+                                              () => Column(
+                                                children: [
+                                                  RadioListTile(
+                                                    activeColor:
+                                                        Color(0xff000000),
+                                                    value: "Done",
+                                                    groupValue: _pcontroller
+                                                        .utxtRadio.value,
+                                                    onChanged: (value) {
+                                                      _pcontroller
+                                                              .utxtRadio.value =
+                                                          value as String;
+                                                    },
+                                                    title: Text("Completed",
+                                                        style: TextStyle(
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.05)),
+                                                  ),
+                                                  RadioListTile(
+                                                    activeColor:
+                                                        Color(0xff000000),
+                                                    value: "Remaind",
+                                                    groupValue: _pcontroller
+                                                        .utxtRadio.value,
+                                                    onChanged: (value) {
+                                                      _pcontroller
+                                                              .utxtRadio.value =
+                                                          value as String;
+                                                    },
+                                                    title: Text(
+                                                      "Remain",
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.05),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             SizedBox(
@@ -538,19 +612,23 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                         child: Center(
                                           child: Text(
                                             "${_pcontroller.Prodlist[index]['payment_status'] == 1 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
-                                            style: TextStyle( fontSize: MediaQuery.of(context).size.width *
-                                                0.047,
+                                            style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.047,
                                                 color: Colors.red.shade900),
                                           ),
                                         ),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.greenAccent,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10))),
+                                          color: Colors.greenAccent,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                          ),
+                                        ),
                                         height: 60,
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -558,8 +636,11 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                         child: Center(
                                           child: Text(
                                             "${_pcontroller.Prodlist[index]['payment_status'] == 0 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
-                                            style: TextStyle(fontSize: MediaQuery.of(context).size.width *
-                                                0.047,
+                                            style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.047,
                                                 color: Colors.green.shade900),
                                           ),
                                         ),
