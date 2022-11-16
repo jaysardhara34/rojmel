@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rojmel/khataBook/controller/homeController.dart';
+import 'package:rojmel/khataBook/controller/prodController.dart';
 import 'package:rojmel/khataBook/modal/homeModal.dart';
 import 'package:rojmel/khataBook/utils/dataBase.dart';
 import 'package:rojmel/khataBook/view/customerScreen.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Mydb _db = Mydb();
   HomeController _controller = Get.put(HomeController());
+  ProdController _pcontroller = Get.put(ProdController());
 
   @override
   void initState() {
@@ -34,6 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getdata() async {
     _controller.Cuslist.value = await _db.readData();
+    _pcontroller.Prodlist.value = await _db.ProreadData();
+    _pcontroller.addition();
+    _pcontroller.topaddition();
+
     print(_controller.Cuslist);
   }
 
@@ -224,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 40,
+                        height:20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -241,13 +247,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                '₹ 0',
-                                style: TextStyle(
-                                    color: Color(0xff44b718),
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.08),
+                              Obx(
+                                ()=> Text(
+                                  '₹ ${_pcontroller.maindoneSum.value}',
+                                  style: TextStyle(
+                                      color: Color(0xff44b718),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.08),
+                                ),
                               ),
                             ],
                           ),
@@ -271,13 +279,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                '₹ 0',
-                                style: TextStyle(
-                                    color: Color(0xffd01717),
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.08),
+                              Obx(
+                                ()=> Text(
+                                  '₹  ${_pcontroller.mainpandingSum.value}',
+                                  style: TextStyle(
+                                      color: Color(0xffd01717),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.08),
+                                ),
                               ),
                             ],
                           ),
@@ -576,4 +586,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 }

@@ -21,7 +21,7 @@ class Mydb {
       String query =
           'CREATE TABLE cus(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobile TEXT, address TEXT)';
       String proquery =
-          "CREATE TABLE product(id INTEGER PRIMARY KEY AUTOINCREMENT,productname TEXT,quantity TEXT,price TEXT,purchasedate TEXT,client_id INTEGER,payment_status INTEGER)";
+          "CREATE TABLE product(id INTEGER PRIMARY KEY AUTOINCREMENT,product_name TEXT,quantity TEXT,price TEXT,purchase_date TEXT,client_id INTEGER,payment_status INTEGER)";
 
       _db.execute(proquery);
       _db.execute(query);
@@ -55,15 +55,34 @@ class Mydb {
     _db!.update('cus', {'name': n1, 'mobile': m1, "address": a1},
         where: 'id = ?', whereArgs: [int.parse(id)]);
   }
-  Future<List<Map>> ProreadData(String id)async{
+
+
+  Future<List<Map>> ProreadData({String? id})async{
     _db= await Check_db();
-    String query = "SELECT * FROM product where client_id = $id";
+    String query = "";
+    if(id!=null)
+    {
+      query = "SELECT * FROM product where client_id = $id";
+    }
+    else
+    {
+      query = "SELECT * FROM product";
+    }
     List<Map> ProductList = await _db!.rawQuery(query,null);
     return ProductList;
   }
+
+  Future<List<Map>> ProductFilterreaddata(String? date) async {
+    _db = await Check_db();
+    String query = "SELECT * FROM product where date = ?";
+    List<Map> ProductList = await _db!.rawQuery(query, [date]);
+
+    return ProductList;
+  }
+
   void ProinsertData(String n1,String q1 ,String p1,String pq,int clientId,int status)async{
     _db =  await Check_db();
-    _db!.insert("product", {"productname":n1,"quantity":q1,"price":p1,"purchasedate":pq,"client_id":clientId,"payment_status":status});
+    _db!.insert("product", {"product_name":n1,"quantity":q1,"price":p1,"purchase_date":pq,"client_id":clientId,"payment_status":status});
   }
 
   void Prodeletedata(String id)async{
@@ -73,6 +92,7 @@ class Mydb {
 
   void Proupdatedata(String id,String n1, String q1,String p1,String pq,int clientId,int status)async{
     _db= await Check_db();
-    _db!.update("product", {"productname":n1,"quantity":q1,"price":p1,"purchasedate":pq,"client_id":clientId,"payment_status":status},where:"id = ?",whereArgs: [int.parse(id)]);
+    _db!.update("product", {"product_name":n1,"quantity":q1,"price":p1,"purchase_date":pq,"client_id":clientId,"payment_status":status},where:"id = ?",whereArgs: [int.parse(id)]);
   }
+
 }

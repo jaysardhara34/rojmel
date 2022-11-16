@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rojmel/khataBook/controller/prodController.dart';
+import 'package:rojmel/khataBook/utils/dataBase.dart';
 
 class Calender extends StatefulWidget {
   const Calender({Key? key}) : super(key: key);
@@ -9,6 +12,21 @@ class Calender extends StatefulWidget {
 }
 
 class _CalenderState extends State<Calender> {
+  ProdController product_controller = Get.put(ProdController());
+
+  Mydb db = Mydb();
+
+  void getData() async {
+    product_controller.Prodlist.value =
+        await db.ProductFilterreaddata(product_controller.FilterDate.value);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,9 +49,128 @@ class _CalenderState extends State<Calender> {
             child: IconButton(onPressed: (){datepick();}, icon: Icon(Icons.calendar_month_outlined)),
           )],
         ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                child: Row(
+                  children: [
+                    Text(
+                      "Date/Time",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: 65,
+                    ),
+                    Text(
+                      "Remark",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "You Gave | You Got",
+                      style: TextStyle(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                  itemCount: product_controller.Prodlist.length,
+                  itemBuilder: (context, index) {
+                    return product_controller.Prodlist[index]['payment_status']==1?Container():Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        height: 70,
+                        width: double.infinity,
+                        color: Colors.grey.shade900,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 110,
+                                    alignment: Alignment.centerLeft,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${product_controller.Prodlist[index]['purchase_date']}",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Text(
+                                          "${product_controller.Prodlist[index]['quantity']}",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 70,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "${product_controller.Prodlist[index]['product_name']}",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 70,
+                                    alignment: Alignment.center,
+                                    color: Colors.red,
+                                    child: product_controller.Prodlist[index]
+                                                ['payment_status'] ==
+                                            0
+                                        ? Text(
+                                            "${product_controller.Prodlist[index]['price']}",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )
+                                        : Text(""),
+                                  ),
+                                  Container(
+                                    width: 70,
+                                    alignment: Alignment.center,
+                                    color: Colors.green,
+                                    child: product_controller.Prodlist[index]
+                                                ['payment_status'] ==
+                                            1
+                                        ? Text(
+                                            "${product_controller.Prodlist[index]['price']}",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )
+                                        : Text(""),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
   void datepick() async {
     DateTime? pickedDate = await showDatePicker(
       context: context,

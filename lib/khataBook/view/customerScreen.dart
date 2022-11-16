@@ -8,8 +8,7 @@ import 'package:rojmel/khataBook/modal/prodModal.dart';
 import 'package:rojmel/khataBook/utils/dataBase.dart';
 import 'package:rojmel/khataBook/view/addproductScreen/payLater.dart';
 import 'package:rojmel/khataBook/view/addproductScreen/payNow.dart';
-import 'package:rojmel/khataBook/view/screens/updateItem.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:rojmel/khataBook/view/homeScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomerInfo extends StatefulWidget {
@@ -38,8 +37,10 @@ class _CustomerInfoState extends State<CustomerInfo> {
   void getdata() async {
     _controller.Cuslist.value = await _db.readData();
     _pcontroller.Prodlist.value =
-        await _db.ProreadData(_controller.dataModal!.id!);
-    print(_controller.Cuslist);
+        await _db.ProreadData(id: _controller.dataModal!.id);
+    _pcontroller.addition();
+    _pcontroller.price();
+    _pcontroller.topaddition();
   }
 
   @override
@@ -79,8 +80,8 @@ class _CustomerInfoState extends State<CustomerInfo> {
               padding: EdgeInsets.only(right: 10),
               child: IconButton(
                   onPressed: () async {
-                    await launchUrl(Uri.parse(
-                        "tel: +91/*/*/*Ṇ*/*/*/${_controller.dataModal!.mobile}"));
+                    await launchUrl(
+                        Uri.parse("tel: +91${_controller.dataModal!.mobile}"));
                   },
                   icon: Icon(Icons.phone)),
             )
@@ -114,13 +115,16 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                             MediaQuery.of(context).size.width *
                                                 0.055),
                                   ),
-                                  Text(
-                                    '₹ 0',
-                                    style: TextStyle(
-                                        color: Color(0xff44b718),
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.055),
+                                  Obx(
+                                    () => Text(
+                                      '₹ ${_pcontroller.doneSum.value}',
+                                      style: TextStyle(
+                                          color: Color(0xff44b718),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.055),
+                                    ),
                                   )
                                 ],
                               ),
@@ -149,13 +153,16 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                             MediaQuery.of(context).size.width *
                                                 0.055),
                                   ),
-                                  Text(
-                                    '₹ 0',
-                                    style: TextStyle(
-                                        color: Color(0xffd01717),
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.055),
+                                  Obx(
+                                    () => Text(
+                                      '₹ ${_pcontroller.pandingSum.value}',
+                                      style: TextStyle(
+                                          color: Color(0xffd01717),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.055),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -278,10 +285,10 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                         '${_pcontroller.Prodlist[index]['price']}');
                                 _txtpurdate = TextEditingController(
                                     text:
-                                        '${_pcontroller.Prodlist[index]['purchasedate']}');
+                                        '${_pcontroller.Prodlist[index]['purchase_date']}');
                                 _txtname = TextEditingController(
                                     text:
-                                        '${_pcontroller.Prodlist[index]['productname']}');
+                                        '${_pcontroller.Prodlist[index]['product_name']}');
                                 _txtqa = TextEditingController(
                                     text:
                                         '${_pcontroller.Prodlist[index]['quantity']}');
@@ -569,7 +576,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Text(
-                                                  "${_pcontroller.Prodlist[index]['purchasedate']}",
+                                                  "${_pcontroller.Prodlist[index]['purchase_date']}",
                                                   style: TextStyle(
                                                       fontSize:
                                                           MediaQuery.of(context)
@@ -589,7 +596,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                               ],
                                             ),
                                             Text(
-                                              "${_pcontroller.Prodlist[index]['productname']}",
+                                              "${_pcontroller.Prodlist[index]['product_name']}",
                                               style: TextStyle(
                                                   fontSize:
                                                       MediaQuery.of(context)
@@ -610,14 +617,17 @@ class _CustomerInfoState extends State<CustomerInfo> {
                                                 0.19,
                                         color: Colors.red.shade200,
                                         child: Center(
-                                          child: Text(
-                                            "${_pcontroller.Prodlist[index]['payment_status'] == 1 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
-                                            style: TextStyle(
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.047,
-                                                color: Colors.red.shade900),
+                                          child: Obx(
+                                            () => Text(
+                                              "${_pcontroller.Prodlist[index]['payment_status'] == 1 ? '₹ 0' : '₹ ${_pcontroller.Prodlist[index]['price']}'}",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.047,
+                                                  color: Colors.red.shade900),
+                                            ),
                                           ),
                                         ),
                                       ),

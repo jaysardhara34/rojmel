@@ -18,6 +18,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
   TextEditingController _txtqa = TextEditingController();
   TextEditingController _txtprice = TextEditingController();
   TextEditingController _txtpurdate = TextEditingController();
+  String? price;
 
   Mydb _pdb = Mydb();
   HomeController _controller = Get.put(HomeController());
@@ -200,6 +201,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                                 MediaQuery.of(context).size.width * 0.40,
                                 MediaQuery.of(context).size.height * 0.06)),
                         onPressed: () {
+                         
                           _pdb.ProinsertData(
                               _txtname.text,
                               _txtqa.text,
@@ -212,7 +214,10 @@ class _PayNowScreenState extends State<PayNowScreen> {
                           _txtname.clear();
                           _txtprice.clear();
                           _txtqa.clear();
+
                           Get.off(CustomerInfo());
+
+
                           Get.snackbar('Product Data Added Sucessfully',
                               'You Can Pay Now',
                               duration: Duration(seconds: 1));

@@ -41,7 +41,6 @@ dependencies:
   sqflite: ^2.2.0+3
   lottie: ^2.0.0
   url_launcher: any
-  share_plus: any
   intl: any
 
 dev_dependencies:

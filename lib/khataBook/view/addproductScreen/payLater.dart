@@ -30,7 +30,7 @@ class _PayLaterScreenState extends State<PayLaterScreen> {
 
   void getdata() async {
     _controller.Cuslist.value =
-        await _pdb.ProreadData(_controller.dataModal!.id!);
+        await _pdb.ProreadData(id: _controller.dataModal!.id);
     print(_controller.Cuslist);
   }
 
